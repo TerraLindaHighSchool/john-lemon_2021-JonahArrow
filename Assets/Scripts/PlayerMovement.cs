@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("IsWalking", isWalking);
 
         // Assign rotation towards move direction
-        Vector3 desiredDirection = Vector3.RotateTowards(transform.position, moveDirection,
+        Vector3 desiredDirection = Vector3.RotateTowards(transform.forward, moveDirection,
             turnSpeed * Time.deltaTime, 0f);
         rotation = Quaternion.LookRotation(desiredDirection);
     }
