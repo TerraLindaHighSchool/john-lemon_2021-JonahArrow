@@ -2,52 +2,65 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// Last Updated: 1/11/22
-// Author: Jonah Arrow
-// Version 1.0
-
 public class PlayerMovement : MonoBehaviour
 {
-    private Animator animator;
-    private Rigidbody rb;
-    private Vector3 moveDirection;
-    private Quaternion rotation;
-    private bool isWalking;
+    public float turnSpeed = 20f;
+    public GameObject ScaryLemon;
 
-    [SerializeField] private float turnSpeed = 20f;
-    // Start is called before the first frame update
+    Animator m_Animator;
+    Rigidbody m_Rigidbody;
+    AudioSource m_AudioSource;
+    Vector3 m_Movement;
+    Quaternion m_Rotation = Quaternion.identity;
+
     void Start()
     {
-        animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
-        rotation = Quaternion.identity;
+        m_Animator = GetComponent<Animator>();
+        m_Rigidbody = GetComponent<Rigidbody>();
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        // Get user imput
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        // Use user imput to set direction player will move
-        moveDirection.Set(horizontal, 0f, vertical);
-        moveDirection.Normalize();
+        m_Movement.Set(horizontal, 0f, vertical);
+        m_Movement.Normalize();
 
-        // Set animator to walking or idle depending on user imput
-        isWalking = !(Mathf.Approximately(horizontal, 0f) && Mathf.Approximately(vertical, 0f));
-        animator.SetBool("IsWalking", isWalking);
+        bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
+        bool hasVerticalInput = !Mathf.Approximately(vertical, 0f);
+        bool isWalking = hasHorizontalInput || hasVerticalInput;
+        m_Animator.SetBool("IsWalking", isWalking);
 
-        // Assign rotation towards move direction
-        Vector3 desiredDirection = Vector3.RotateTowards(transform.forward, moveDirection,
-            turnSpeed * Time.deltaTime, 0f);
-        rotation = Quaternion.LookRotation(desiredDirection);
+        if (isWalking)
+        {
+            if (!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Play();
+            }
+        }
+        else
+        {
+            m_AudioSource.Stop();
+        }
+
+        Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
+        m_Rotation = Quaternion.LookRotation(desiredForward);
     }
 
-    //Animator event
-    private void OnAnimatorMove()
+    void OnAnimatorMove()
     {
-        rb.MovePosition(rb.position + moveDirection * animator.deltaPosition.magnitude);
-        rb.MoveRotation(rotation);
+        m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
+        m_Rigidbody.MoveRotation(m_Rotation);
+    }
+
+    private void OnTriggerStay(Collider Other)
+    {
+        if(CompareTag("Trigger1"))
+        {
+            GameObject.FindGameObjectWithTag("Trigger1").SetActive(false);
+        }
     }
 }
+
