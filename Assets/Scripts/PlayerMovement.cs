@@ -55,11 +55,11 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MoveRotation(m_Rotation);
     }
 
-    private void OnTriggerStay(Collider Other)
+    public void OnTriggerEnter(Collider other)
     {
-        if(CompareTag("Trigger1"))
+        if (other.gameObject.CompareTag("Trigger1"))
         {
-            GameObject.FindGameObjectWithTag("Trigger1").SetActive(false);
+            other.gameObject.SetActive(false);
         }
     }
 }

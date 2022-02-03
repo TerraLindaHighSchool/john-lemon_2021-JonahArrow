@@ -598,7 +598,6 @@ GameObject:
   - component: {fileID: 565855470911710532}
   - component: {fileID: 9071971956225488883}
   - component: {fileID: 6164965094595712227}
-  - component: {fileID: 397705524324952723}
   m_Layer: 0
   m_Name: ScaryLemon
   m_TagString: Trigger1
@@ -652,20 +651,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!136 &397705524324952723
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 565855470911289700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.34722924
-  m_Height: 1.4925828
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.71908784, z: 0}
 --- !u!1 &565855470911289702
 GameObject:
   m_ObjectHideFlags: 0

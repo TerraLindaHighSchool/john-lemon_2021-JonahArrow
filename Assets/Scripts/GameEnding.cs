@@ -12,6 +12,7 @@ public class GameEnding : MonoBehaviour
     public AudioSource exitAudio;
     public CanvasGroup caughtBackgroundImageCanvasGroup;
     public AudioSource caughtAudio;
+    public CanvasGroup Static;
 
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
@@ -23,6 +24,10 @@ public class GameEnding : MonoBehaviour
         if (other.gameObject == player)
         {
             m_IsPlayerAtExit = true;
+        }
+        if (other.gameObject.CompareTag("Trigger1"))
+        {
+            
         }
     }
 
@@ -43,6 +48,17 @@ public class GameEnding : MonoBehaviour
         }
     }
 
+    void Jumpscare1(CanvasGroup imageCanvasGroup, AudioSource audioSource)
+    {
+        if (!m_HasAudioPlayed)
+        {
+            audioSource.Play();
+            m_HasAudioPlayed = true;
+        }
+
+
+    }
+
     void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
     {
         if (!m_HasAudioPlayed)
@@ -50,6 +66,7 @@ public class GameEnding : MonoBehaviour
             audioSource.Play();
             m_HasAudioPlayed = true;
         }
+
 
         m_Timer += Time.deltaTime;
         imageCanvasGroup.alpha = m_Timer / fadeDuration;
