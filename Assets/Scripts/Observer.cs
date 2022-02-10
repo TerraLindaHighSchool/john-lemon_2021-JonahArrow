@@ -8,6 +8,7 @@ public class Observer : MonoBehaviour
     public GameEnding gameEnding;
 
     bool m_IsPlayerInRange;
+    public bool isStaticCaught;
 
     void OnTriggerEnter(Collider other)
     {
@@ -38,7 +39,8 @@ public class Observer : MonoBehaviour
                 if (raycastHit.collider.transform == player)
                 {
                     gameEnding.CaughtPlayer();
-                }
+
+}
             }
         }
     }

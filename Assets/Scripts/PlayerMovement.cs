@@ -6,6 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public float turnSpeed = 20f;
     public GameObject ScaryLemon;
+    public Canvas canvas;
+    public GameObject MainCamera;
+    public GameObject Camera;
+    public GameObject Static1;
+    private float count;
+
+    private bool isStatic = false;
 
     Animator m_Animator;
     Rigidbody m_Rigidbody;
@@ -13,11 +20,32 @@ public class PlayerMovement : MonoBehaviour
     Vector3 m_Movement;
     Quaternion m_Rotation = Quaternion.identity;
 
+
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
+        Camera.gameObject.SetActive(false);
+        count = 1;
+        Static1.gameObject.SetActive(false);
+    }
+
+    void Update()
+    {
+        if(isStatic)
+        {
+            count++;
+            Static1.gameObject.SetActive(true);
+        }
+        if(count == 20)
+        {
+            isStatic = false;
+            count = 1;
+            MainCamera.gameObject.SetActive(true);
+            Camera.gameObject.SetActive(false);
+            Static1.gameObject.SetActive(false);
+        }
     }
 
     void FixedUpdate()
@@ -59,6 +87,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Trigger1"))
         {
+            MainCamera.gameObject.SetActive(false);
+            Camera.gameObject.SetActive(true);
+            isStatic = true;
             other.gameObject.SetActive(false);
         }
     }

@@ -13,21 +13,25 @@ public class GameEnding : MonoBehaviour
     public CanvasGroup caughtBackgroundImageCanvasGroup;
     public AudioSource caughtAudio;
     public CanvasGroup Static;
+    public AudioSource staticAudio;
+    public GameObject MainCamera;
+    public GameObject Camera;
+    public GameObject Static1;
 
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
+    [SerializeField] bool m_IsPlayerStatic;
     float m_Timer;
     bool m_HasAudioPlayed;
+    private bool isStatic;
+    public bool isStaticCaught;
+    float count;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject == player)
         {
             m_IsPlayerAtExit = true;
-        }
-        if (other.gameObject.CompareTag("Trigger1"))
-        {
-            
         }
     }
 
@@ -45,18 +49,14 @@ public class GameEnding : MonoBehaviour
         else if (m_IsPlayerCaught)
         {
             EndLevel(caughtBackgroundImageCanvasGroup, true, caughtAudio);
+            isStatic = true;
         }
-    }
-
-    void Jumpscare1(CanvasGroup imageCanvasGroup, AudioSource audioSource)
-    {
-        if (!m_HasAudioPlayed)
+        if (isStatic)
         {
-            audioSource.Play();
-            m_HasAudioPlayed = true;
+            MainCamera.gameObject.SetActive(false);
+            Camera.gameObject.SetActive(true);
+            Static1.gameObject.SetActive(true);
         }
-
-
     }
 
     void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
