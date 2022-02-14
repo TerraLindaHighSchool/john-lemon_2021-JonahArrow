@@ -60,3 +60,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   gameEnding: {fileID: 0}
+  isStaticCaught: 0
