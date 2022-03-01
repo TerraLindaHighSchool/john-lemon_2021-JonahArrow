@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject Scare;
     public GameObject Scare2;
     public GameObject Scare3;
+    public GameObject Camera3;
     private float count;
 
     private bool isStatic = false;
@@ -74,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 m_AudioSource.Play();
             }
+            Camera3.gameObject.SetActive(false);
         }
         else
         {
