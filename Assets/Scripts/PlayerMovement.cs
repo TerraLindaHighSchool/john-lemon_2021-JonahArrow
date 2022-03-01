@@ -10,6 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public GameObject MainCamera;
     public GameObject Camera;
     public GameObject Static1;
+    public GameObject Scare;
+    public GameObject Scare2;
+    public GameObject Scare3;
     private float count;
 
     private bool isStatic = false;
@@ -29,6 +32,9 @@ public class PlayerMovement : MonoBehaviour
         Camera.gameObject.SetActive(false);
         count = 1;
         Static1.gameObject.SetActive(false);
+        Scare.gameObject.SetActive(false);
+        Scare2.gameObject.SetActive(false);
+        Scare3.gameObject.SetActive(false);
     }
 
     void Update()
@@ -37,8 +43,9 @@ public class PlayerMovement : MonoBehaviour
         {
             count++;
             Static1.gameObject.SetActive(true);
+            Scare.gameObject.SetActive(true);
         }
-        if(count == 20)
+        if(count == 18)
         {
             isStatic = false;
             count = 1;
@@ -92,6 +99,10 @@ public class PlayerMovement : MonoBehaviour
             isStatic = true;
             other.gameObject.SetActive(false);
         }
+        if (other.gameObject.CompareTag("Trigger2"))
+        {
+            Scare3.gameObject.SetActive(true);
+        }    
     }
 }
 

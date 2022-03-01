@@ -17,15 +17,18 @@ public class GameEnding : MonoBehaviour
     public GameObject MainCamera;
     public GameObject Camera;
     public GameObject Static1;
+    public GameObject Scare2;
 
     bool m_IsPlayerAtExit;
     bool m_IsPlayerCaught;
     [SerializeField] bool m_IsPlayerStatic;
     float m_Timer;
+    float waitcount = 0;
     bool m_HasAudioPlayed;
     private bool isStatic;
     public bool isStaticCaught;
     float count;
+    bool hasstart = false;
 
     void OnTriggerEnter(Collider other)
     {
@@ -45,6 +48,7 @@ public class GameEnding : MonoBehaviour
         if (m_IsPlayerAtExit)
         {
             EndLevel(exitBackgroundImageCanvasGroup, false, exitAudio);
+            hasstart = true;
         }
         else if (m_IsPlayerCaught)
         {
@@ -57,6 +61,14 @@ public class GameEnding : MonoBehaviour
             Camera.gameObject.SetActive(true);
             Static1.gameObject.SetActive(true);
         }
+        if (waitcount == 100)
+        {
+            Application.Quit();
+        }
+        if (waitcount == 101)
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     void EndLevel(CanvasGroup imageCanvasGroup, bool doRestart, AudioSource audioSource)
@@ -65,8 +77,13 @@ public class GameEnding : MonoBehaviour
         {
             audioSource.Play();
             m_HasAudioPlayed = true;
+            Scare2.gameObject.SetActive(true);
         }
 
+        if (hasstart)
+        {
+            waitcount++;
+        }
 
         m_Timer += Time.deltaTime;
         imageCanvasGroup.alpha = m_Timer / fadeDuration;
